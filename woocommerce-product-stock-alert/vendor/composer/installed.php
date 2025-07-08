@@ -1,23 +1,23 @@
-<?php return array( 
-    'root' => array( 
-        'name' => '__root__', 
-        'pretty_version' => '1.0.0+no-version-set', 
-        'version' => '1.0.0.0', 
-        'reference' => NULL, 
-        'type' => 'library', 
-        'install_path' => __DIR__ . '/../../', 
-        'aliases' => array(), 
-        'dev' => true, 
-    ), 
-    'versions' => array( 
-        '__root__' => array( 
-            'pretty_version' => '1.0.0+no-version-set', 
-            'version' => '1.0.0.0', 
-            'reference' => NULL, 
-            'type' => 'library', 
-            'install_path' => __DIR__ . '/../../', 
-            'aliases' => array(), 
-            'dev_requirement' => false, 
-        ), 
-    ), 
- );
+<?php return array(
+    'root' => array(
+        'name' => 'multivendorx/notifima',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '95bc03c3737d2d7a9ce833b9d53b8215fe8cb39a',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => false,
+    ),
+    'versions' => array(
+        'multivendorx/notifima' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '95bc03c3737d2d7a9ce833b9d53b8215fe8cb39a',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

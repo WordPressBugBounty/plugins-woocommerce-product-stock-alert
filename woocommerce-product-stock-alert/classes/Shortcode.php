@@ -1,35 +1,48 @@
 <?php
+/**
+ * Shortcode class file.
+ *
+ * @package Notifima
+ */
 
-namespace StockManager;
+namespace Notifima;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Notifima Shortcode class
+ *
+ * @class       Shortcode class
+ * @version     3.0.0
+ * @author      MultiVendorX
+ */
 class Shortcode {
 
-	public function __construct() {
-		// Product Stock Manager Form Shortcode.
-		add_shortcode( 'display_stock_manager_form', [ $this, 'display_stock_manager_form' ] );
-        add_shortcode( 'display_stock_alert_form', [ $this, 'display_stock_manager_form' ] );
-	} 
+    /**
+     * Shortcode constructor.
+     */
+    public function __construct() {
+        // Product Notifima Subscription Form Shortcode.
+        add_shortcode( 'notifima_subscription_form', array( $this, 'notifima_subscription_form' ) );
+    }
 
     /**
-	 * display stock Manager form wrapper function for Shortcode rendering
-	 *
-	 * @access public
-	 * @param mixed $function
-	 * @param array $atts ( default: array() )
-	 * @return string
-	 */
-	function display_stock_manager_form( $attr ) {
+     * Display Notifima subscription form.
+     *
+     * @param array $attr Shortcode attributes. Default empty array.
+     *
+     * @return string HTML content of the subscription form.
+     */
+    public function notifima_subscription_form( $attr ) {
         ob_start();
-        $product_id = isset( $attr['product_id'] ) ? (int)$attr['product_id'] : 0;
+        $product_id = isset( $attr['product_id'] ) ? (int) $attr['product_id'] : null;
 
-        do_action( 'woocommerce_stock_manager_form_before' );
+        do_action( 'notifima_before_subscription_form' );
 
-        SM()->frontend->display_product_subscription_form($product_id);
+        Notifima()->frontend->display_product_subscription_form( $product_id );
 
-        do_action( 'woocommerce_stock_manager_form_after' );
+        do_action( 'notifima_after_subscription_form' );
 
         return ob_get_clean();
     }
-} 
+}

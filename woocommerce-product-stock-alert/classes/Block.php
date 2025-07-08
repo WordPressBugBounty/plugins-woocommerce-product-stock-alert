@@ -1,69 +1,84 @@
 <?php
+/**
+ * Block class file.
+ *
+ * @package Notifima
+ */
 
-namespace StockManager;
+namespace Notifima;
+
+use Notifima\FrontendScripts;
+
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Notifima Block class
+ *
+ * @class       Block class
+ * @version     3.0.0
+ * @author      MultiVendorX
+ */
 class Block {
+    /**
+     * Holds the configuration for blocks.
+     *
+     * @var array
+     */
     private $blocks;
 
+    /**
+     * Block constructor.
+     */
     public function __construct() {
-        // Register the block
-        add_action( 'init', [$this, 'register_blocks'] );
-        // Enqueue the script and style for block editor
-        add_action( 'enqueue_block_editor_assets', [ $this,'enqueue_block_assets'] );
-
-
-        $this->blocks = [
-            [
-                'name' => 'stock-notification-block', // block name
-                'render_php_callback_function' => [$this, 'render_stock_notification_form_block'], // php render calback function
-                'required_script' => 'stock_manager_frontend_js', // the script which is required in the frontend of the block
-                'required_style'   => '', // the style which is required in the frontend of the block
-                // src link is generated (which is append from block name) within the function
-				'react_dependencies'   => ['wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n'], // the react dependencies which required in js
-                'localize' => [
-					'object_name' => 'stockNotificationBlock', // the localized variable name
-                    // all the data that is required in index.js
-					'data' => [
-                        'apiUrl'  => '', // this set blank because in scope the get_rest_url() is not defined
-                        'restUrl' => SM()->rest_namespace,
-                        'nonce'   => wp_create_nonce( 'stock-manager-security-nonce' )
-					],
-				],
-            ]
-        ];
+        $this->blocks = $this->initialize_blocks();
+        // Register the block.
+        add_action( 'init', array( $this, 'register_blocks' ) );
+        // Enqueue the script and style for block editor.
+        add_action( 'enqueue_block_assets', array( $this, 'enqueue_all_block_assets' ) );
     }
 
-    public function enqueue_block_assets() {
+    /**
+     * Initializes the blocks used in the MooWoodle plugin.
+     *
+     * @return array
+     */
+    public function initialize_blocks() {
+        $blocks = array();
 
-        foreach ($this->blocks as $block_script) {
-			wp_enqueue_script($block_script['name'], SM()->plugin_url . 'build/block/' . $block_script['name'] . '/index.js', $block_script['react_dependencies'], SM()->version, true);
-			if (isset($block_script['localize'])) {
-                $block_script['localize']['data']['apiUrl'] = untrailingslashit( get_rest_url() );
-				wp_localize_script($block_script['name'], $block_script['localize']['object_name'], $block_script['localize']['data']);
-			}
-		}
+        $blocks[] = array(
+            'name'       => 'stock-notification-block', // block name.
+            'textdomain' => 'notifima',
+            'block_path' => Notifima()->plugin_path . FrontendScripts::get_build_path_name() . 'js/block/',
+        );
+
+        Notifima()->block_paths += array(
+            'block/stock-notification-block' => FrontendScripts::get_build_path_name() . 'block/stock-notification-block/index.js',
+        );
+
+        return apply_filters( 'notifima_initialize_blocks', $blocks );
     }
-    
-    public function register_blocks() {
-    
-        foreach ($this->blocks as $block) {
-            register_block_type(SM()->text_domain . '/' . $block['name'], [
-                'render_callback' => $block['render_php_callback_function'],
-                'script'          => $block['required_script'],
-            ]);
+
+    /**
+     * Enqueues all frontend and editor assets for registered blocks.
+     *
+     * @return void
+     */
+    public function enqueue_all_block_assets() {
+        FrontendScripts::load_scripts();
+        foreach ( $this->blocks as $block_script ) {
+            FrontendScripts::localize_scripts( $block_script['textdomain'] . '-' . $block_script['name'] . '-editor-script' );
+            FrontendScripts::localize_scripts( $block_script['textdomain'] . '-' . $block_script['name'] . '-script' );
         }
     }
 
-    public function render_stock_notification_form_block($attributes) {
-        ob_start();
-        // Extract the productId from attributes
-        $product_id = isset($attributes['productId']) ? intval($attributes['productId']) : null;
-
-        // Display the product subscription form
-        SM()->frontend->display_product_subscription_form($product_id, true);
-    
-        return ob_get_clean();
+    /**
+     * Registers all custom blocks defined in the plugin.
+     *
+     * @return void
+     */
+    public function register_blocks() {
+        foreach ( $this->blocks as $block ) {
+            register_block_type( $block['block_path'] . $block['name'] );
+        }
     }
-    
 }
