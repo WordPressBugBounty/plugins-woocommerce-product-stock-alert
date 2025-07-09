@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Notifima Shortcode class
  *
  * @class       Shortcode class
- * @version     3.0.0
+ * @version     PRODUCT_VERSION
  * @author      MultiVendorX
  */
 class Shortcode {

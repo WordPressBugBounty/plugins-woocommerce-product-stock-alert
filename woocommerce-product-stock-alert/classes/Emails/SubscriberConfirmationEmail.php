@@ -16,7 +16,7 @@ if ( ! class_exists( 'SubscriberConfirmationEmail' ) ) :
      *
      * An confirmation email will be sent to the customer when they subscribe product.
      *
-     * @version     3.0.0
+     * @version     PRODUCT_VERSION
      * @author      MultiVendorX
      * @extends     \WC_Email
      */

@@ -1,11 +1,11 @@
-=== Notifima – WooCommerce Stock Manager, Inventory Management, Wishlist ===
+=== Notifima – WooCommerce Stock Manager, Inventory Management, Waitlist ===
 
 Contributors: wcmp
 Tags: woocommerce stock manager, woocommerce stock management, woocommerce inventory management, stock waitlist, in stock alert
 Requires at least: 5.4
 Tested up to: 6.8.1
 Requires PHP: 8.0
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Donate link: https://multivendorx.com/donate/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +20,8 @@ The ultimate solution to keep your customers engaged and informed when products 
 🌐 Explore our [Document](https://notifima.com/docs/?utm_source=wporg&utm_medium=plugindescription&utm_campaign=notifimawporg)
 
 🌟 Learn More About [Pro](https://notifima.com/pricing/?utm_source=wporg&utm_medium=plugindescription&utm_campaign=notifimawporg)
+
+👉 Official Demo Link: Try out Free and Pro **Notifima** [Demo site](https://multivendordemo.com/notifima/)
 
 ==📦Supported Product Types of WooCommerce ==
 👉Simple
@@ -40,7 +42,6 @@ The ultimate solution to keep your customers engaged and informed when products 
 * 🎨 Customize the form’s heading, button text, colors, hover effects, submission alerts, and more.
 * 📝 Personalize email headings and subjects sent to customers. 
 * ⚙️ Work seamlessly with product backorder option enabled. 
-* 🔧 Reposition and display the stock alert form on product pages with a shortcode: **[display_stock_alert_form]** 
 * 📂 Export your subscriber list easily via WordPress’s Tools settings. 
 * 📊 Export all stock data for your shop. 
 * ❌ Customers can unsubscribe from products from their My Account page. **[PRO]** 
@@ -73,6 +74,8 @@ Are you tired of losing potential sales because your customers can't buy the out
 
 👉 UPGRADE TO [**Notifima PRO**](https://notifima.com/pricing/?utm_source=wporg&utm_medium=plugindescription&utm_campaign=notifimawporg)  
 
+👉 Official Demo Link: Try out Free and Pro **Notifima** [Demo site](https://multivendordemo.com/notifima/)
+
 ✔️ **Double Opt In [PRO]**: Double opt-in for stock alert subscription is a two-step confirmation process that ensures subscribers genuinely want to receive notifications about product availability. 
 
 📨 **Mailchimp Connect [PRO]**: Effortlessly connect your WooCommerce out-of-stock user subscriptions with Mailchimp for seamless communication and marketing strategies. Admins can easily manage and sync user data with Mailchimp lists. 
@@ -93,11 +96,12 @@ Are you tired of losing potential sales because your customers can't buy the out
 📉 **Product Stock History [PRO]**: Dive into the Notifima's Stock Manager for WooCommerce’s Stock Log page, offering a detailed history of each product’s stock movements. Track changes over time to gain insights into product availability trends. **[COMING SOON]**
 
 
-## 👩‍🏫 Learn More About Pro
-[Notifima Pro](https://notifima.com/pricing/?utm_source=wporg&utm_medium=plugindescription&utm_campaign=notifimawporg)
+## 👩‍🏫 Learn More About Pro [Notifima Pro](https://notifima.com/pricing/?utm_source=wporg&utm_medium=plugindescription&utm_campaign=notifimawporg)
+👉 Official Demo Link: Try out Free and Pro **Notifima** [Demo site](https://multivendordemo.com/notifima/)
+
 
 ## Shortcodes
-- **[display_stock_manager_form]**: You can display stock alert form anywhere using this shortcode.
+- **[notifima_subscription_form]**: You can display stock alert form anywhere using this shortcode.
 
 ## 🌟 Upcoming Features: 
 * 🚫 Mark products as ‘Discontinued’ in your WooCommerce catalog. 
@@ -128,10 +132,10 @@ Manual installation method requires downloading the [Notifima] (https://wordpres
   *A: Certainly, we provide a complete panel for each displayed text or alert, allowing you to customize the messages according to your preferences.*
 
 **Q: How can I export subscribers' data to my new site?**
-  *A: Navigate to WP-admin >> Tools >> WC Stock Alert and export the subscriber lists. The CSV will contain product names and their corresponding subscriber email IDs.*
+  *A: Navigate to Notifima >> Subscriber List >> Download CSV and export the subscriber lists. The CSV will contain product names and their corresponding subscriber email IDs.*
 
 **Q: Is it possible to exclude the admin from receiving out-of-stock subscription notifications?**
-  *A: Certainly, go to Settings >> Recipient Email for New Subscriber and remove the admin's email ID from there.*
+  *A: Certainly, go to Settings >> Appearence >> Recipient Email for New Subscriber and remove the admin's email ID from there.*
 
 == Screenshots ==
 1. Stock alert plugin settings panel
@@ -142,6 +146,9 @@ Manual installation method requires downloading the [Notifima] (https://wordpres
 6. Inventory manager
 
 == Changelog ==
+
+= 3.0.1 - 2025-07-09 =
+* Added     - CSS issue fix for improved layout consistency.
 
 = 3.0.0 - 2025-07-08 =
 * Added     - Compatibility of WordPress 6.8.1.
@@ -431,7 +438,7 @@ Manual installation method requires downloading the [Notifima] (https://wordpres
 = 1.3.0 =
 * Features : Customer can unsubscribe a product which he/she already subscribed.
 * Feature : A confirmation mail will be sent to subscriber after subscribe a product.
-* Feature : [display_stock_alert_form] => Shortcode to display stock alert form in product page.
+* Feature : [notifima_subscription_form] => Shortcode to display stock alert form in product page.
 * Feature : An export option is added inside 'Tools->WC Stock Alert Export' to export subscribers' list.
 
 = 1.2.0 =
@@ -518,7 +525,7 @@ Manual installation method requires downloading the [Notifima] (https://wordpres
 = 1.3.0 =
 * Features : Customer can unsubscribe a product which he/she already subscribed.
 * Feature : A confirmation mail will be sent to subscriber after subscribe a product.
-* Feature : [display_stock_alert_form] => Shortcode to display stock alert form in product page.
+* Feature : [notifima_subscription_form] => Shortcode to display stock alert form in product page.
 * Feature : An export option is added inside 'Tools->WC Stock Alert Export' to export subscribers' list.
 
 = 1.2.0 =

@@ -14,7 +14,7 @@ use Automattic\WooCommerce\Utilities\FeaturesUtil;
  * Notifima Main class
  *
  * @class       Main class
- * @version     3.0.0
+ * @version     PRODUCT_VERSION
  * @author      MultiVendorX
  */
 class Notifima {

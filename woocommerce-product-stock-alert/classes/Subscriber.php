@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Notifima Subscriber class
  *
  * @class       Subscriber class
- * @version     3.0.0
+ * @version     PRODUCT_VERSION
  * @author      MultiVendorX
  */
 class Subscriber {
