@@ -210,7 +210,6 @@ class Admin {
             FrontendScripts::enqueue_script( 'notifima-components-script' );
             FrontendScripts::enqueue_script( 'notifima-admin-script' );
 			FrontendScripts::enqueue_style( 'notifima-components-style' );
-			FrontendScripts::enqueue_style( 'notifima-style' );
 			FrontendScripts::localize_scripts( 'notifima-admin-script' );
         }
 
@@ -298,10 +297,9 @@ class Admin {
             }
 
             if ( strpos( $url, 'block' ) === false ) {
-                $path = 'build/index.js';
+                $path = 'assets/js/components.js';
             }
         }
-
         return $path;
     }
 

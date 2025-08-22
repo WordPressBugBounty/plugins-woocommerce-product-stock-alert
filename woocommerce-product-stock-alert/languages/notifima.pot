@@ -1,21 +1,21 @@
 # Copyright (c) 2025 Notifima Inc. All Rights Reserved.
 msgid ""
 msgstr ""
-"Project-Id-Version: Notifima 3.0.4\n"
+"Project-Id-Version: Notifima 3.0.5\n"
 "Report-Msgid-Bugs-To: https://notifima.com/contact/\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-23T06:21:01+00:00\n"
+"POT-Creation-Date: 2025-08-22T07:30:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: notifima\n"
 
 #. Plugin Name of the plugin
 #: product_stock_alert.php
-#: classes/FrontendScripts.php:324
+#: classes/FrontendScripts.php:306
 msgid "Notifima"
 msgstr ""
 
@@ -71,15 +71,15 @@ msgid_plural "Removed subscribers from %s products."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/Admin.php:227
+#: classes/Admin.php:226
 msgid "Interested Person( s )"
 msgstr ""
 
-#: classes/Admin.php:253
+#: classes/Admin.php:252
 msgid "Number of Interested Person( s )"
 msgstr ""
 
-#: classes/Admin.php:275
+#: classes/Admin.php:274
 msgid "Number of Interested Person( s ) : "
 msgstr ""
 
@@ -104,7 +104,7 @@ msgid "A Customer has subscribed to a product on {site_title} "
 msgstr ""
 
 #: classes/Emails/AdminNewSubscriberEmail.php:100
-#: classes/Emails/ProductBackInStockEmail.php:105
+#: classes/Emails/ProductBackInStockEmail.php:116
 #: classes/Emails/SubscriberConfirmationEmail.php:93
 msgid "Welcome to {site_title} "
 msgstr ""
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Alert customer when their subscribed product becomes in stock"
 msgstr ""
 
-#: classes/Emails/ProductBackInStockEmail.php:95
+#: classes/Emails/ProductBackInStockEmail.php:106
 msgid "Your Subscribed product on {site_title} is available now"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgstr ""
 msgid "You have subscribed to a product on {site_title} "
 msgstr ""
 
-#: classes/FrontendScripts.php:313
+#: classes/FrontendScripts.php:295
 msgid "Processing..."
 msgstr ""
 
@@ -151,7 +151,7 @@ msgid "Receive in-stock notifications for this."
 msgstr ""
 
 #: classes/Notifima.php:88
-#: release/assets/js/components.js:1
+#: release/assets/js/components.js:5
 msgid "Unsubscribe"
 msgstr ""
 
@@ -357,31 +357,68 @@ msgid "Customer Details:"
 msgstr ""
 
 #: release/assets/js/block/stock-notification-block/index.js:1
+#: src/block/stock-notification-block/index.js:54
 msgid "Stock Notification Block"
 msgstr ""
 
 #: release/assets/js/block/stock-notification-block/index.js:1
+#: src/block/stock-notification-block/index.js:55
 msgid "This block can be connected to WooCommerce Out-of-Stock and Backorder products to provide a stock notification form for users."
 msgstr ""
 
 #: release/assets/js/block/stock-notification-block/index.js:1
+#: src/block/stock-notification-block/index.js:12
 msgid "Loading form…"
 msgstr ""
 
 #: release/assets/js/block/stock-notification-block/index.js:1
+#: src/block/stock-notification-block/index.js:38
 msgid "Failed to load form."
 msgstr ""
 
 #: release/assets/js/block/stock-notification-block/index.js:1
+#: src/block/stock-notification-block/index.js:42
 msgid "No product selected."
 msgstr ""
 
 #: release/assets/js/components.js:1
-msgid "Download product wise subscriber data."
+msgid "Email Restriction Policies"
 msgstr ""
 
 #: release/assets/js/components.js:1
-msgid "Download CSV"
+msgid "Restrict email registrations."
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Specify email domains that are restricted from subscribing. You can add multiple commma seperated emails."
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Block email domains"
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Blocked domain alert message"
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Create an alert message for users attempting to subscribe from blocked domains."
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Specify email addresses that are restricted from subscribing. You can add multiple commma seperated emails."
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Blocked email addresses"
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Blocked email alert message"
+msgstr ""
+
+#: release/assets/js/components.js:1
+msgid "Create an alert message for users attempting to subscribe from blocked Email ID."
 msgstr ""
 
 #: release/assets/js/components.js:1
@@ -405,378 +442,352 @@ msgid "Mailchimp API"
 msgstr ""
 
 #: release/assets/js/components.js:1
-msgid "Boost to Product Notifima Pro to access premium features!"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "More surprises? Oh yes."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Double Opt-in."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Ban Spam Mail."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Export Subscribers."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Subscription Dashboard."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "MailChimp Integration."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Recaptcha Support."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Subscription Details."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Export/Import Stock."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Get in touch with Support"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Reach out to the support team for assistance or guidance."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Explore Documentation"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Understand the plugin and its settings."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Contribute Here"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Participate in product enhancement."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Double Opt-In"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Experience the power of Double Opt-In for our Stock Alert Form - Guaranteed precision in every notification!"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Your Subscription Hub"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Subscription Dashboard - Easily monitor and download lists of out-of-stock subscribers for seamless management."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Mailchimp Bridge"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Seamlessly link WooCommerce out-of-stock subscriptions with Mailchimp for effective marketing."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Unsubscribe Notifications"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "User-Initiated Unsubscribe from In-Stock Notifications."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Ban Spam Emails"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Email and Domain Blacklist for Spam Prevention."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Why am I not receiving any emails when a customer subscribes for an out-of-stock product?"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Please install a plugin like Email Log and perform a test subscription."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Why is the out-of-stock form not appearing?"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "There might be a theme conflict issue. To troubleshoot, switch to a default theme like Twenty Twenty-Four and check if the form appears."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Does Notifima support product variations?"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Yes, product variations are fully supported and editable from the Inventory Manager. Notifima handles variable products with ease and uses an expandable feature to make managing variations clear and straightforward."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Do you support Google reCaptcha for the out-of-stock form?"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Yes, <a href=\"https://notifima.com/pricing/?utm_source=wpadmin&utm_medium=pluginsettings&utm_campaign=notifima\" target=\"_blank\">Notifima Pro</a> has support for reCaptcha."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Appearance"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Customize stock alert form."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Personalize Layout"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "'Unsubscribe' Button Caption"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Modify the un-subscribe button text. By default we display \"Unsubscribe\"."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Guest Subscriptions"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Allow guests (non-logged-in users) to subscribe to notifications for out-of-stock products."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Allow Backorder Subscriptions"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Enabling this setting allows users to subscribe to out-of-stock products, even when the backorder option is enabled."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Stock Status for Lead Time"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Lead time informs customers when a product will be available again. This setting lets you choose which stock statuses will display the restock estimate."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Out of stock"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "On backorder"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Lead Format"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Choose the lead time format: Either dynamic (set unique lead time text for all out of stock product) or static (apply a default lead time text for out of stock products)."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Static"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Dynamic"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Lead time static text"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "This will be the standard message displayed for all out-of-stock products unless a custom lead time is specified."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Display subscriber count for out of stock"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Enabling this setting shows the subscriber count on the single product page."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Subscriber count notification message"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Personalize the notification text to let users know about the quantity of subscribers for out-of-stock item. Note: Use %no_of_subscribed% as number of interest/subscribed persons."
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Subscriber double opt-in"
-msgstr ""
-
-#: release/assets/js/components.js:1
-msgid "Enable Double Opt-in flow for subscription confirmation."
-msgstr ""
-
-#. translators: %s is the Pro upgrade URL
-#: release/assets/js/components.js:2
-#, js-format
-msgid "Upgrade to <a href=\"%s\" target=\"_blank\"><span class=\"pro-strong\">Pro</span></a> to enable Double Opt-in flow for subscription confirmation."
-msgstr ""
-
-#: release/assets/js/components.js:2
-msgid "Default: Kindly check your inbox to confirm the subscription."
-msgstr ""
-
-#: release/assets/js/components.js:2
-msgid "Double opt-in success message"
-msgstr ""
-
-#: release/assets/js/components.js:2
-msgid "Enable reCaptcha"
-msgstr ""
-
-#: release/assets/js/components.js:2
-msgid "Enable this to prevent automated bots from submitting forms. Get your v3 reCAPTCHA site key and secret key from <a href=\"https://developers.google.com/recaptcha\" target=\"_blank\">here</a>."
-msgstr ""
-
-#. translators: %s is the Pro upgrade URL
-#: release/assets/js/components.js:3
-#, js-format
-msgid "Upgrade to <a href=\"%s\" target=\"_blank\"><span class=\"pro-strong\">Pro</span></a> for unlocking reCAPTCHA for out-of-stock form subscriptions."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Site Key"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Secret Key"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Set the email address to receive notifications when a user subscribes to an out-of-stock product. You can add multiple comma-separated emails.<br/> Default: The admin's email is set as the receiver. Exclude the admin's email from the list to exclude admin from receiving these notifications."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Recipient email for new subscriber"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Email Restriction Policies"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Restrict email registrations."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Specify email domains that are restricted from subscribing. You can add multiple commma seperated emails."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Block email domains"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Blocked domain alert message"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Create an alert message for users attempting to subscribe from blocked domains."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Specify email addresses that are restricted from subscribing. You can add multiple commma seperated emails."
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Blocked email addresses"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Blocked email alert message"
-msgstr ""
-
-#: release/assets/js/components.js:3
-msgid "Create an alert message for users attempting to subscribe from blocked Email ID."
-msgstr ""
-
-#: release/assets/js/components.js:3
 msgid "Prompt Messages"
 msgstr ""
 
-#: release/assets/js/components.js:3
+#: release/assets/js/components.js:1
 msgid "Manage post-form submission messages."
 msgstr ""
 
 #. Translators: This message display dynamic product title and emails.
-#: release/assets/js/components.js:5
+#: release/assets/js/components.js:3
 #, js-format
 msgid "Tip: Utilize %product_title% for dynamic product titles and %customer_email% for personalized customer email addresses in your messages."
 msgstr ""
 
-#: release/assets/js/components.js:5
+#: release/assets/js/components.js:3
 msgid "Successful form submission"
 msgstr ""
 
 #. Translators: This message display dynamic product title and emails.
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 #, js-format
 msgid "Tip: Enhance personalization by incorporating %product_title% for dynamic product titles and %customer_email% for individual customer emails."
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Repeated subscription alert"
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Personalize the message shown to users when they try to subscribe with an invalid email address."
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Email validation error"
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Modify the text that confirms user that they have successful unsubscribe."
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Unsubscribe confirmation"
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
+msgid "Boost to Product Notifima Pro to access premium features!"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "More surprises? Oh yes."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Double Opt-in."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Ban Spam Mail."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Export Subscribers."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Subscription Dashboard."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "MailChimp Integration."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Recaptcha Support."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Subscription Details."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Export/Import Stock."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Download product wise subscriber data."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Download CSV"
+msgstr ""
+
+#: release/assets/js/components.js:5
 msgid "Faq's"
 msgstr ""
 
-#: release/assets/js/components.js:7
+#: release/assets/js/components.js:5
 msgid "Instant solutions at hand."
 msgstr ""
 
+#: release/assets/js/components.js:5
+msgid "Get in touch with Support"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Reach out to the support team for assistance or guidance."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Explore Documentation"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Understand the plugin and its settings."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Contribute Here"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Participate in product enhancement."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Double Opt-In"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Experience the power of Double Opt-In for our Stock Alert Form - Guaranteed precision in every notification!"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Your Subscription Hub"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Subscription Dashboard - Easily monitor and download lists of out-of-stock subscribers for seamless management."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Mailchimp Bridge"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Seamlessly link WooCommerce out-of-stock subscriptions with Mailchimp for effective marketing."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Unsubscribe Notifications"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "User-Initiated Unsubscribe from In-Stock Notifications."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Ban Spam Emails"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Email and Domain Blacklist for Spam Prevention."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Why am I not receiving any emails when a customer subscribes for an out-of-stock product?"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Please install a plugin like Email Log and perform a test subscription."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Why is the out-of-stock form not appearing?"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "There might be a theme conflict issue. To troubleshoot, switch to a default theme like Twenty Twenty-Four and check if the form appears."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Does Notifima support product variations?"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Yes, product variations are fully supported and editable from the Inventory Manager. Notifima handles variable products with ease and uses an expandable feature to make managing variations clear and straightforward."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Do you support Google reCaptcha for the out-of-stock form?"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Yes, <a href=\"https://notifima.com/pricing/?utm_source=wpadmin&utm_medium=pluginsettings&utm_campaign=notifima\" target=\"_blank\">Notifima Pro</a> has support for reCaptcha."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Appearance"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Customize stock alert form."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Personalize Layout"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "'Unsubscribe' Button Caption"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Modify the un-subscribe button text. By default we display \"Unsubscribe\"."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Guest Subscriptions"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Allow guests (non-logged-in users) to subscribe to notifications for out-of-stock products."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Allow Backorder Subscriptions"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Enabling this setting allows users to subscribe to out-of-stock products, even when the backorder option is enabled."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Stock Status for Lead Time"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Lead time informs customers when a product will be available again. This setting lets you choose which stock statuses will display the restock estimate."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Out of stock"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "On backorder"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Lead Format"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Choose the lead time format: Either dynamic (set unique lead time text for all out of stock product) or static (apply a default lead time text for out of stock products)."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Static"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Dynamic"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Lead time static text"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "This will be the standard message displayed for all out-of-stock products unless a custom lead time is specified."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Display subscriber count for out of stock"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Enabling this setting shows the subscriber count on the single product page."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Subscriber count notification message"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Personalize the notification text to let users know about the quantity of subscribers for out-of-stock item. Note: Use %no_of_subscribed% as number of interest/subscribed persons."
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Subscriber double opt-in"
+msgstr ""
+
+#: release/assets/js/components.js:5
+msgid "Enable Double Opt-in flow for subscription confirmation."
+msgstr ""
+
+#. translators: %s is the Pro upgrade URL
+#: release/assets/js/components.js:6
+#, js-format
+msgid "Upgrade to <a href=\"%s\" target=\"_blank\"><span class=\"pro-strong\">Pro</span></a> to enable Double Opt-in flow for subscription confirmation."
+msgstr ""
+
+#: release/assets/js/components.js:6
+msgid "Default: Kindly check your inbox to confirm the subscription."
+msgstr ""
+
+#: release/assets/js/components.js:6
+msgid "Double opt-in success message"
+msgstr ""
+
+#: release/assets/js/components.js:6
+msgid "Enable reCaptcha"
+msgstr ""
+
+#: release/assets/js/components.js:6
+msgid "Enable this to prevent automated bots from submitting forms. Get your v3 reCAPTCHA site key and secret key from <a href=\"https://developers.google.com/recaptcha\" target=\"_blank\">here</a>."
+msgstr ""
+
+#. translators: %s is the Pro upgrade URL
+#: release/assets/js/components.js:7
+#, js-format
+msgid "Upgrade to <a href=\"%s\" target=\"_blank\"><span class=\"pro-strong\">Pro</span></a> for unlocking reCAPTCHA for out-of-stock form subscriptions."
+msgstr ""
+
+#: release/assets/js/components.js:7
+msgid "Site Key"
+msgstr ""
+
+#: release/assets/js/components.js:7
+msgid "Secret Key"
+msgstr ""
+
+#: release/assets/js/components.js:7
+msgid "Set the email address to receive notifications when a user subscribes to an out-of-stock product. You can add multiple comma-separated emails.<br/> Default: The admin's email is set as the receiver. Exclude the admin's email from the list to exclude admin from receiving these notifications."
+msgstr ""
+
+#: release/assets/js/components.js:7
+msgid "Recipient email for new subscriber"
+msgstr ""
+
 #: release/assets/js/block/stock-notification-block/block.json
+#: src/block/stock-notification-block/block.json
 msgctxt "block title"
 msgid "Stock Notification Block"
+msgstr ""
+
+#: src/block.json
+msgctxt "block title"
+msgid "Notifima"
 msgstr ""

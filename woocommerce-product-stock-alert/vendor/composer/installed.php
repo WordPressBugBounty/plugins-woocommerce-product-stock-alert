@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'multivendorx/notifima',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '95bc03c3737d2d7a9ce833b9d53b8215fe8cb39a',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'multivendorx/notifima' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '95bc03c3737d2d7a9ce833b9d53b8215fe8cb39a',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
