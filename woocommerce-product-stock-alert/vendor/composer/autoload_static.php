@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit310bc4faf8fa6cd09ee2e60549b18717
 {
     public static $prefixLengthsPsr4 = array (
-        'N' => 
+        'N' =>
         array (
             'Notifima\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Notifima\\' => 
+        'Notifima\\' =>
         array (
             0 => __DIR__ . '/../..' . '/classes',
         ),
@@ -23,7 +23,6 @@ class ComposerStaticInit310bc4faf8fa6cd09ee2e60549b18717
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Notifima\\Admin' => __DIR__ . '/../..' . '/classes/Admin.php',
-        'Notifima\\Ajax' => __DIR__ . '/../..' . '/classes/Ajax.php',
         'Notifima\\Block' => __DIR__ . '/../..' . '/classes/Block.php',
         'Notifima\\Deprecated\\DeprecatedActionHooks' => __DIR__ . '/../..' . '/classes/Deprecated/DeprecatedActionHooks.php',
         'Notifima\\Deprecated\\DeprecatedFilterHooks' => __DIR__ . '/../..' . '/classes/Deprecated/DeprecatedFilterHooks.php',
@@ -34,7 +33,9 @@ class ComposerStaticInit310bc4faf8fa6cd09ee2e60549b18717
         'Notifima\\FrontendScripts' => __DIR__ . '/../..' . '/classes/FrontendScripts.php',
         'Notifima\\Install' => __DIR__ . '/../..' . '/classes/Install.php',
         'Notifima\\Notifima' => __DIR__ . '/../..' . '/classes/Notifima.php',
-        'Notifima\\RestAPI' => __DIR__ . '/../..' . '/classes/RestAPI.php',
+        'Notifima\\RestAPI\\Controllers\\Settings' => __DIR__ . '/../..' . '/classes/RestAPI/Controllers/Settings.php',
+        'Notifima\\RestAPI\\Controllers\\Subscribers' => __DIR__ . '/../..' . '/classes/RestAPI/Controllers/Subscribers.php',
+        'Notifima\\RestAPI\\Rest' => __DIR__ . '/../..' . '/classes/RestAPI/Rest.php',
         'Notifima\\Setting' => __DIR__ . '/../..' . '/classes/Setting.php',
         'Notifima\\Shortcode' => __DIR__ . '/../..' . '/classes/Shortcode.php',
         'Notifima\\Subscriber' => __DIR__ . '/../..' . '/classes/Subscriber.php',

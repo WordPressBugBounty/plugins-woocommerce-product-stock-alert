@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Notifima\\Admin' => $baseDir . '/classes/Admin.php',
-    'Notifima\\Ajax' => $baseDir . '/classes/Ajax.php',
     'Notifima\\Block' => $baseDir . '/classes/Block.php',
     'Notifima\\Deprecated\\DeprecatedActionHooks' => $baseDir . '/classes/Deprecated/DeprecatedActionHooks.php',
     'Notifima\\Deprecated\\DeprecatedFilterHooks' => $baseDir . '/classes/Deprecated/DeprecatedFilterHooks.php',
@@ -19,7 +18,9 @@ return array(
     'Notifima\\FrontendScripts' => $baseDir . '/classes/FrontendScripts.php',
     'Notifima\\Install' => $baseDir . '/classes/Install.php',
     'Notifima\\Notifima' => $baseDir . '/classes/Notifima.php',
-    'Notifima\\RestAPI' => $baseDir . '/classes/RestAPI.php',
+    'Notifima\\RestAPI\\Controllers\\Settings' => $baseDir . '/classes/RestAPI/Controllers/Settings.php',
+    'Notifima\\RestAPI\\Controllers\\Subscribers' => $baseDir . '/classes/RestAPI/Controllers/Subscribers.php',
+    'Notifima\\RestAPI\\Rest' => $baseDir . '/classes/RestAPI/Rest.php',
     'Notifima\\Setting' => $baseDir . '/classes/Setting.php',
     'Notifima\\Shortcode' => $baseDir . '/classes/Shortcode.php',
     'Notifima\\Subscriber' => $baseDir . '/classes/Subscriber.php',

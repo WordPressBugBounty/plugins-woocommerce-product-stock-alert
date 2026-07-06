@@ -23,9 +23,9 @@ class Admin {
      */
     public function __construct() {
         // admin pages manu and submenu.
-        add_action( 'admin_menu', array( $this, 'add_menus' ), 10 );
+        add_action( 'admin_menu', array( $this, 'register_admin_menus' ), 10 );
         // admin script and style.
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ), 20 );
 
         // create custom column.
         add_action( 'manage_edit-product_columns', array( $this, 'display_subscriber_header' ) );
@@ -45,71 +45,58 @@ class Admin {
         add_filter( 'allowed_redirect_hosts', array( $this, 'allow_notifima_redirect_host' ) );
         // For loco translation.
         add_action( 'load_script_textdomain_relative_path', array( $this, 'textdomain_relative_path' ), 10, 2 );
+        add_action( 'woocommerce_admin_process_product_object', array( $this, 'save_product_discontinued_status' ) );
+        add_action( 'woocommerce_product_options_stock', array( $this, 'product_discontinued_checkbox' ), 10 );
+
+        add_action( 'woocommerce_variation_options_dimensions', array( $this, 'variation_discontinued_checkbox' ), 10, 3 );
+        add_action( 'woocommerce_save_product_variation', array( $this, 'save_variation_discontinued_status' ), 10, 2 );
     }
 
     /**
      * Add options page.
      */
-    public function add_menus() {
-        if ( is_admin() ) {
+    public function register_admin_menus() {
             add_menu_page(
                 'Notifima',
                 'Notifima',
                 'manage_options',
                 'notifima',
                 array( $this, 'create_setting_page' ),
-                'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMTA1OS42IDEwNzguOSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTA1OS42IDEwNzguOTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOm5vbmU7fQoJLnN0MXtmaWxsOiNmZmY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0tMTY0MS4yLDE1NC45Yy0xMTYuNiwwLTE5My44LDc3LjItMTkzLjgsMjA3LjljMCwxMzAuNiw3Ny4yLDIwNy44LDE5My44LDIwNy44YzExOCwwLDE5NS4yLTc3LjIsMTk1LjItMjA3LjgKCQlDLTE0NDUuOSwyMzIuMS0xNTIzLjIsMTU0LjktMTY0MS4yLDE1NC45eiIvPgoJCgkJPGVsbGlwc2UgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIC0wLjcwNzEgMC43MDcxIDAuNzA3MSAtMjYzLjI0ODMgLTg1Mi40OTg1KSIgY2xhc3M9InN0MCIgY3g9Ii0xMTYwLjciIGN5PSItMTA4LjUiIHJ4PSI5Mi4xIiByeT0iOTIuMSIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTS0xNjM5LjgsMC40Yy0yMTcuNywwLTM2My44LDE0Ni0zNjMuOCwzNjMuN3YzOTAuM2M0My45LTMzLjQsODcuNy02Ni45LDEzMS42LTEwMC4zCgkJYzMyLjIsMjEuNSwxMjEuNCw3NC44LDI0NC44LDcxYzQxLjgtMS4zLDE0NC02LDIzMi04Mi4xYzExNy45LTEwMS45LDExNy43LTI1MS44LDExNy43LTI4MS43Qy0xMjc3LjQsMTQ1LjEtMTQyMy41LDAuNC0xNjM5LjgsMC40CgkJeiBNLTE2NDEuMiw1NzAuNmMtMTE2LjYsMC0xOTMuOC03Ny4yLTE5My44LTIwNy44YzAtMTMwLjYsNzcuMi0yMDcuOSwxOTMuOC0yMDcuOWMxMTgsMCwxOTUuMiw3Ny4yLDE5NS4yLDIwNy45CgkJQy0xNDQ1LjksNDkzLjQtMTUyMy4yLDU3MC42LTE2NDEuMiw1NzAuNnoiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0tMTE2MC43LTMyMy41Yy0xMTguNywwLTIxNSw5Ni4yLTIxNSwyMTVjMCwxMTguNyw5Ni4yLDIxNSwyMTUsMjE1czIxNS05Ni4yLDIxNS0yMTUKCQlDLTk0NS43LTIyNy4yLTEwNDItMzIzLjUtMTE2MC43LTMyMy41eiBNLTExNjAuNy0xNi40Yy01MC45LDAtOTIuMS00MS4yLTkyLjEtOTIuMXM0MS4yLTkyLjEsOTIuMS05Mi4xczkyLjEsNDEuMiw5Mi4xLDkyLjEKCQlTLTExMDkuOC0xNi40LTExNjAuNy0xNi40eiIvPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTM2NC42LDMyNC40Yy0yMTcuNywwLTM2My44LDE0Ni0zNjMuOCwzNjMuN3YzOTAuM2M0My45LTMzLjQsODcuNy02Ni45LDEzMS42LTEwMC4zCgkJCWMzMi4yLDIxLjUsMTIxLjQsNzQuOCwyNDQuOCw3MWM0MS45LTEuMywxNDQtNiwyMzItODIuMUM3MjcuMiw4NjUuMSw3MjcsNzE1LjMsNzI3LDY4NS4zQzcyNyw0NjkuMSw1ODAuOSwzMjQuNCwzNjQuNiwzMjQuNHoKCQkJIE01NTguNCw2ODYuOGMwLDAuNCwwLDAuOCwwLDEuMWMtMC4yLDU0LjYtMTMuOSw5OS44LTM4LjUsMTMzLjljLTMzLjksNDctODguNSw3Mi44LTE1Ni43LDcyLjhjLTExNi42LDAtMTkzLjgtNzcuMi0xOTMuOC0yMDcuOAoJCQljMCwwLDAsMCwwLDBzMCwwLDAsMGMwLTEzMC42LDc3LjItMjA3LjgsMTkzLjgtMjA3LjhjNTMuNSwwLDk4LjUsMTUuOSwxMzEuOSw0NS40YzQwLDM1LjQsNjMuMSw5MC41LDYzLjMsMTYxLjQKCQkJQzU1OC40LDY4Niw1NTguNCw2ODYuNCw1NTguNCw2ODYuOEM1NTguNCw2ODYuOCw1NTguNCw2ODYuOCw1NTguNCw2ODYuOEM1NTguNCw2ODYuOCw1NTguNCw2ODYuOCw1NTguNCw2ODYuOHoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik04NDMuNywwLjVjLTExOC43LDAtMjE1LDk2LjItMjE1LDIxNWMwLDExOC43LDk2LjIsMjE1LDIxNSwyMTVjMTE4LjcsMCwyMTUtOTYuMiwyMTUtMjE1CgkJCUMxMDU4LjcsOTYuOCw5NjIuNCwwLjUsODQzLjcsMC41eiBNODQzLjcsMzA3LjZjLTUwLjksMC05Mi4xLTQxLjItOTIuMS05Mi4xYzAtNTAuOSw0MS4yLTkyLjEsOTIuMS05Mi4xCgkJCWM1MC45LDAsOTIuMSw0MS4yLDkyLjEsOTIuMUM5MzUuOCwyNjYuNCw4OTQuNiwzMDcuNiw4NDMuNywzMDcuNnoiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K', 50
+                'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMTA1OS42IDEwNzguOSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTA1OS42IDEwNzguOTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOm5vbmU7fQoJLnN0MXtmaWxsOiNmZmY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0tMTY0MS4yLDE1NC45Yy0xMTYuNiwwLTE5My44LDc3LjItMTkzLjgsMjA3LjljMCwxMzAuNiw3Ny4yLDIwNy44LDE5My44LDIwNy44YzExOCwwLDE5NS4yLTc3LjIsMTk1LjItMjA3LjgKCQlDLTE0NDUuOSwyMzIuMS0xNTIzLjIsMTU0LjktMTY0MS4yLDE1NC45eiIvPgoJCgkJPGVsbGlwc2UgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIC0wLjcwNzEgMC43MDcxIDAuNzA3MSAtMjYzLjI0ODMgLTg1Mi40OTg1KSIgY2xhc3M9InN0MCIgY3g9Ii0xMTYwLjciIGN5PSItMTA4LjUiIHJ4PSI5Mi4xIiByeT0iOTIuMSIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTS0xNjM5LjgsMC40Yy0yMTcuNywwLTM2My44LDE0Ni0zNjMuOCwzNjMuN3YzOTAuM2M0My45LTMzLjQsODcuNy02Ni45LDEzMS42LTEwMC4zCgkJYzMyLjIsMjEuNSwxMjEuNCw3NC44LDI0NC44LDcxYzQxLjgtMS4zLDE0NC02LDIzMi04Mi4xYzExNy45LTEwMS45LDExNy43LTI1MS44LDExNy43LTI4MS43Qy0xMjc3LjQsMTQ1LjEtMTQyMy41LDAuNC0xNjM5LjgsMC40CgkJeiBNLTE2NDEuMiw1NzAuNmMtMTE2LjYsMC0xOTMuOC03Ny4yLTE5My44LTIwNy44YzAtMTMwLjYsNzcuMi0yMDcuOSwxOTMuOC0yMDcuOWMxMTgsMCwxOTUuMiw3Ny4yLDE5NS4yLDIwNy45CgkJQy0xNDQ1LjksNDkzLjQtMTUyMy4yLDU3MC42LTE2NDEuMiw1NzAuNnoiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0tMTE2MC43LTMyMy41Yy0xMTguNywwLTIxNSw5Ni4yLTIxNSwyMTVjMCwxMTguNyw5Ni4yLDIxNSwyMTUsMjE1czIxNS05Ni4yLDIxNS0yMTUKCQlDLTk0NS43LTIyNy4yLTEwNDItMzIzLjUtMTE2MC43LTMyMy41eiBNLTExNjAuNy0xNi40Yy01MC45LDAtOTIuMS00MS4yLTkyLjEtOTIuMXM0MS4yLTkyLjEsOTIuMS05Mi4xczkyLjEsNDEuMiw5Mi4xLDkyLjEKCQlTLTExMDkuOC0xNi40LTExNjAuNy0xNi40eiIvPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTM2NC42LDMyNC40Yy0yMTcuNywwLTM2My44LDE0Ni0zNjMuOCwzNjMuN3YzOTAuM2M0My45LTMzLjQsODcuNy02Ni45LDEzMS42LTEwMC4zCgkJCWMzMi4yLDIxLjUsMTIxLjQsNzQuOCwyNDQuOCw3MWM0MS45LTEuMywxNDQtNiwyMzItODIuMUM3MjcuMiw4NjUuMSw3MjcsNzE1LjMsNzI3LDY4NS4zQzcyNyw0NjkuMSw1ODAuOSwzMjQuNCwzNjQuNiwzMjQuNHoKCQkJIE01NTguNCw2ODYuOGMwLDAuNCwwLDAuOCwwLDEuMWMtMC4yLDU0LjYtMTMuOSw5OS44LTM4LjUsMTMzLjljLTMzLjksNDctODguNSw3Mi44LTE1Ni43LDcyLjhjLTExNi42LDAtMTkzLjgtNzcuMi0xOTMuOC0yMDcuOAoJCQljMCwwLDAsMCwwLDBzMCwwLDAsMGMwLTEzMC42LDc3LjItMjA3LjgsMTkzLjgtMjA3LjhjNTMuNSwwLDk4LjUsMTUuOSwxMzEuOSw0NS40YzQwLDM1LjQsNjMuMSw5MC41LDYzLjMsMTYxLjQKCQkJQzU1OC40LDY4Niw1NTguNCw2ODYuNCw1NTguNCw2ODYuOEM1NTguNCw2ODYuOCw1NTguNCw2ODYuOCw1NTguNCw2ODYuOEM1NTguNCw2ODYuOCw1NTguNCw2ODYuOCw1NTguNCw2ODYuOHoiLz4KCTwvZz4KCTxnPgoJCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik04NDMuNywwLjVjLTExOC43LDAtMjE1LDk2LjItMjE1LDIxNWMwLDExOC43LDk2LjIsMjE1LDIxNSwyMTVjMTE4LjcsMCwyMTUtOTYuMiwyMTUtMjE1CgkJCUMxMDU4LjcsOTYuOCw5NjIuNCwwLjUsODQzLjcsMC41eiBNODQzLjcsMzA3LjZjLTUwLjksMC05Mi4xLTQxLjItOTIuMS05Mi4xYzAtNTAuOSw0MS4yLTkyLjEsOTIuMS05Mi4xCgkJCWM1MC45LDAsOTIuMSw0MS4yLDkyLjEsOTIuMUM5MzUuOCwyNjYuNCw4OTQuNiwzMDcuNiw4NDMuNywzMDcuNnoiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K',
+                50
             );
 
-            $pro_sticker = ! Utill::is_khali_dabba() ?
-            '<span 
-                class="notifima-pro-tag"
-                style="
-                font-size: 0.5rem;
-                background: #e35047;
-                padding: 0.125rem 0.5rem;
-                color: #F9F8FB;
-                font-weight: 700;
-                line-height: 1;
-                position: absolute;
-                margin-left: 0.25rem;
-                border-radius: 2rem 0;
-                top: 50%;
-                transform: translateY(-50%);
-                "
-            > Pro </span>' : '';
-
             // Array contain notifima submenu.
-            $submenus = array(
+            $submenu_items = array(
+                'dashboard'         => array(
+                    'name'   => __( 'Dashboard', 'notifima' ),
+                    'subtab' => '',
+                ),
                 'settings'          => array(
                     'name'   => __( 'Settings', 'notifima' ),
-                    'subtab' => 'appearance',
+                    'subtab' => 'automation',
                 ),
                 'subscribers-list'  => array(
-                    'name'   => __( 'Subscriber List', 'notifima' ) . $pro_sticker,
+                    'name'   => __( 'Subscriber List', 'notifima' ),
                     'subtab' => '',
                 ),
                 'inventory-manager' => array(
-                    'name'   => __( 'Inventory Manager', 'notifima' ) . $pro_sticker,
+                    'name'   => __( 'Inventory Manager', 'notifima' ),
                     'subtab' => '',
                 ),
             );
 
-            foreach ( $submenus as $slug => $submenu ) {
+            foreach ( $submenu_items as $slug => $submenu_item ) {
                 // prepare subtab if subtab is exist.
-                $subtab = '';
-
-                if ( $submenu['subtab'] ) {
-                    $subtab = '&subtab=' . $submenu['subtab'];
-                }
+                $subtab = $submenu_item['subtab'] ? '&subtab=' . $submenu_item['subtab'] : '';
 
                 add_submenu_page(
                     'notifima',
-                    $submenu['name'],
-                    "<span style='position: relative; display: block; width: 100%;' class='admin-menu'>" . $submenu['name'] . '</span>',
+                    $submenu_item['name'],
+                    "<span style='position: relative; display: block; width: 100%;' class='admin-menu'>" . $submenu_item['name'] . '</span>',
                     'manage_options',
                     'notifima#&tab=' . $slug . $subtab,
-                    '_-return_null'
+                    '__return_null'
                 );
             }
 
@@ -121,19 +108,18 @@ class Admin {
                     '<style>
                         a:has(.upgrade-to-pro){
                             background: linear-gradient(-28deg, #c4a9e8, #7848b9, #852aff) !important;
-                            color: White !important;
+                            color: white !important;
+                            padding: 5px 0;
                         }
-                        padding: 5px 0;
                     </style>
                     <div style="margin-left: -12px;" class="upgrade-to-pro"><i class="dashicons dashicons-awards"></i>' . esc_html__( 'Upgrade to Pro', 'notifima' ) . '</div> ',
                     'manage_options',
-                    '',
+                    'notifima-upgrade',
                     array( self::class, 'handle_external_redirects' )
                 );
             }
 
             remove_submenu_page( 'notifima', 'notifima' );
-        }
     }
 
     /**
@@ -142,7 +128,7 @@ class Admin {
      * @return void
      */
     public function create_setting_page() {
-        echo '<div id="admin-main-wrapper"></div>';
+        echo '<div id="admin-main-wrapper" class="admin-main-wrapper"></div>';
     }
 
     /**
@@ -172,8 +158,8 @@ class Admin {
         foreach ( $post_ids as $post_id ) {
             $product_ids = Subscriber::get_related_product( wc_get_product( $post_id ) );
             foreach ( $product_ids as $product_id ) {
-                $emails = Subscriber::get_product_subscribers_email( $product_id );
-                foreach ( $emails as $alert_id => $to ) {
+                $subscriber_emails = Subscriber::get_product_subscribers_email( $product_id );
+                foreach ( $subscriber_emails as $alert_id => $to ) {
                     Subscriber::update_subscriber( $alert_id, 'unsubscribed' );
                 }
                 delete_post_meta( $product_id, 'no_of_subscribers' );
@@ -190,8 +176,9 @@ class Admin {
      * @return void
      */
     public function subscribers_bulk_action_admin_notice() {
-        if ( ! empty( filter_input( INPUT_POST, 'bulk_remove_subscribers', FILTER_SANITIZE_NUMBER_INT ) ) ) {
-            $bulk_remove_count = filter_input( INPUT_POST, 'bulk_remove_subscribers', FILTER_SANITIZE_NUMBER_INT );
+        $bulk_remove_count = filter_input( INPUT_POST, 'bulk_remove_subscribers', FILTER_SANITIZE_NUMBER_INT );
+
+        if ( ! empty( $bulk_remove_count ) ) {
             // Translators: This message is to display removed subscribers count for the product.
             printf( '<div id="message" class="updated fade"><p>' . esc_html( _n( 'Removed subscribers from %s product.', 'Removed subscribers from %s products.', $bulk_remove_count, 'notifima' ) ) . '</p></div>', esc_html( $bulk_remove_count ) );
         }
@@ -202,7 +189,7 @@ class Admin {
      *
      * @return void
      */
-    public function enqueue_admin_script() {
+    public function enqueue_admin_assets() {
         if ( get_current_screen()->id === 'toplevel_page_notifima' ) {
             wp_enqueue_script( 'wp-element' );
 
@@ -234,8 +221,8 @@ class Admin {
      */
     public function display_subscriber_count_in_column( $column_name, $post_id ) {
         if ( 'product_subscriber' === $column_name ) {
-            $no_of_subscriber = get_post_meta( $post_id, 'no_of_subscribers', true );
-            echo '<div class="product-subscribtion-column">' . esc_html( ( isset( $no_of_subscriber ) && $no_of_subscriber > 0 ) ? $no_of_subscriber : 0 ) . '</div>';
+            $subscriber_count = get_post_meta( $post_id, 'no_of_subscribers', true );
+            echo '<div class="product-subscribtion-column">' . esc_html( max( 0, (int) $subscriber_count ) ) . '</div>';
         }
     }
 
@@ -246,11 +233,11 @@ class Admin {
         global $post;
         $product = wc_get_product( $post->ID );
         if ( Subscriber::is_product_outofstock( $product ) ) {
-            $no_of_subscriber = $product->get_meta( 'no_of_subscribers', true );
+            $subscriber_count = $product->get_meta( Utill::NOTIFIMA_PRODUCT_META['subscribers'], true );
             ?>
             <p class="form-field">
                 <label class=""><?php esc_attr_e( 'Number of Interested Person( s )', 'notifima' ); ?></label>
-                <span class="no-subscriber"><?php echo esc_html( ( isset( $no_of_subscriber ) && $no_of_subscriber > 0 ) ? $no_of_subscriber : 0 ); ?></span>
+                <span class="no-subscriber"><?php echo esc_html( max( 0, (int) $subscriber_count ) ); ?></span>
             </p>
             <?php
         }
@@ -268,11 +255,11 @@ class Admin {
     public function display_product_subscriber_count_in_variation_metabox( $loop, $variation_data, $variation ) {
         $product = wc_get_product( $variation->ID );
         if ( Subscriber::is_product_outofstock( $product ) ) {
-            $product_subscriber = $product->get_meta( 'no_of_subscribers', true );
+            $subscriber_count = $product->get_meta( Utill::NOTIFIMA_PRODUCT_META['subscribers'], true );
             ?>
             <p class="form-row form-row-full interested-person">
                 <label class="stock-label"><?php esc_attr_e( 'Number of Interested Person( s ) : ', 'notifima' ); ?></label>
-                <div class="variation-no-subscriber"><?php echo esc_html( ( isset( $product_subscriber ) && $product_subscriber > 0 ) ? $product_subscriber : 0 ); ?></div>
+                <div class="variation-no-subscriber"><?php echo esc_html( max( 0, (int) $subscriber_count ) ); ?></div>
             </p>
             <?php
         }
@@ -297,7 +284,7 @@ class Admin {
             }
 
             if ( strpos( $url, 'block' ) === false ) {
-                $path = 'assets/js/components.js';
+                $path = 'assets/js/vendors.js';
             }
         }
         return $path;
@@ -327,5 +314,60 @@ class Admin {
         }
 
         return $hosts;
+    }
+
+    /**
+     * Save product discontinued status.
+     *
+     * @param \WC_Product $product Product object.
+     */
+    public function save_product_discontinued_status( $product ) {
+        $product_discontinued = filter_input( INPUT_POST, Utill::NOTIFIMA_PRODUCT_META['product_discontinued'], FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+        $product->update_meta_data( Utill::NOTIFIMA_PRODUCT_META['product_discontinued'], $product_discontinued ? 'yes' : '' );
+    }
+
+    /**
+     * Add product discontinued checkbox.
+     */
+    public function product_discontinued_checkbox() {
+        woocommerce_wp_checkbox(
+            array(
+                'id'          => Utill::NOTIFIMA_PRODUCT_META['product_discontinued'],
+                'label'       => __( 'Mark this product as discontinued', 'notifima' ),
+                'description' => __( 'Mark this product as discontinued from the shop.', 'notifima' ),
+            )
+        );
+    }
+    /**
+     * Add variation discontinued checkbox.
+     *
+     * @param int      $loop           Variation loop index.
+     * @param array    $variation_data Variation data.
+     * @param \WP_Post $variation      Variation object.
+     */
+    public function variation_discontinued_checkbox( $loop, $variation_data, $variation ) {
+        woocommerce_wp_checkbox(
+            array(
+                'id'            => Utill::NOTIFIMA_PRODUCT_META['product_discontinued'] . '[' . $loop . ']',
+                'wrapper_class' => 'form-row form-row-full',
+                'label'         => __( 'Mark this variation as discontinued', 'notifima' ),
+                'description'   => __( 'Mark this variation as discontinued from the shop.', 'notifima' ),
+                'value'         => get_post_meta(
+                    $variation->ID,
+                    Utill::NOTIFIMA_PRODUCT_META['product_discontinued'],
+                    true
+                ),
+            )
+        );
+    }
+    /**
+     * Save variation discontinued status.
+     *
+     * @param int $variation_id Variation ID.
+     * @param int $loop         Variation loop index.
+     */
+    public function save_variation_discontinued_status( $variation_id, $loop ) {
+            $product_discontinued = filter_input( INPUT_POST, Utill::NOTIFIMA_PRODUCT_META['product_discontinued'], FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+            update_post_meta( $variation_id, Utill::NOTIFIMA_PRODUCT_META['product_discontinued'], ! empty( $product_discontinued[ $loop ] ) ? 'yes' : '' );
     }
 }
