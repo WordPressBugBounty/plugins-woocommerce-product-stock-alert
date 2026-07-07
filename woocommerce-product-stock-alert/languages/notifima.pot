@@ -1,14 +1,14 @@
 # Copyright (c) 2026 Notifima Inc. All Rights Reserved.
 msgid ""
 msgstr ""
-"Project-Id-Version: Notifima 3.1.0\n"
+"Project-Id-Version: Notifima 3.1.1\n"
 "Report-Msgid-Bugs-To: https://notifima.com/contact/?utm_source=wpadmin&utm_medium=pluginsettings&utm_campaign=notifima\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-06T10:33:20+00:00\n"
+"POT-Creation-Date: 2026-07-07T13:29:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: notifima\n"
@@ -147,7 +147,7 @@ msgstr ""
 msgid "You have subscribed to a product on {site_title} "
 msgstr ""
 
-#: classes/Install.php:624
+#: classes/Install.php:628
 msgid "Every 10 Minutes"
 msgstr ""
 
