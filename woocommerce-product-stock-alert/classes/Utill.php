@@ -130,6 +130,35 @@ class Utill {
     }
 
     /**
+     * Generic REST API capability check, shared by every controller/route's
+     * `permission_callback` in this plugin (and notifima-pro's, which
+     * already depend on this class for `validate_nonce()`/`Subscriber`)
+     * instead of each one re-checking `current_user_can()` (and shaping its
+     * own error response) separately.
+     *
+     * Grants access when the current user has at least one of the given
+     * capabilities; otherwise returns a `WP_Error` with the correct 401
+     * (not logged in) or 403 (logged in, but lacking the capability) status.
+     *
+     * @param string|array $capabilities One capability, or an array of capabilities - access is granted if the current user has any one of them.
+     * @return true|\WP_Error
+     */
+    public static function current_user_has_capability( $capabilities, $context = '' ) {
+        $capabilities = apply_filters( 'notifima_permissions_check', $capabilities, $context );
+        foreach ( (array) $capabilities as $capability ) {
+            if ( current_user_can( $capability ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown
+                return true;
+            }
+        }
+
+        return new \WP_Error(
+            'notifima_rest_forbidden',
+            __( 'You are not allowed to perform this action.', 'notifima' ),
+            array( 'status' => is_user_logged_in() ? 403 : 401 )
+        );
+    }
+
+    /**
      * Validate REST nonce.
      *
      * @param \WP_REST_Request $request Request object.
@@ -154,23 +183,54 @@ class Utill {
     }
 
     /**
-     * Get all subscribers by product IDs.
+     * Get subscriber details based on filter options.
      *
-     * @param array $product_ids Product IDs.
-     * @return array
+     * @param array $args Filter options.
+     * @return array|int List of matching subscribers or count.
      */
-    public static function get_subscribers( $product_ids ) {
+    public static function get_subscribers( $args ) {
         global $wpdb;
 
-        if ( empty( $product_ids ) ) {
-            return array();
+        $table = $wpdb->prefix . 'notifima_subscribers';
+        $where = array();
+
+        if ( isset( $args['product_ids'] ) ) {
+            $where[] = 'product_id IN (' . implode( ',', array_map( 'absint', $args['product_ids'] ) ) . ')';
         }
 
-        $table       = $wpdb->prefix . 'notifima_subscribers';
-        $product_ids = array_map( 'absint', $product_ids );
-        $in_clause   = implode( ',', $product_ids );
+        if ( ! empty( $args['email'] ) ) {
+            $where[] = $wpdb->prepare(
+                'email LIKE %s',
+                '%' . $wpdb->esc_like( $args['email'] ) . '%'
+            );
+        }
 
-        $query = "SELECT * FROM {$table} WHERE product_id IN ({$in_clause}) ORDER BY id DESC";
+        if ( ! empty( $args['status'] ) && 'all' !== $args['status'] ) {
+            $where[] = $wpdb->prepare( 'status = %s', $args['status'] );
+        }
+
+        if ( ! empty( $args['start_date'] ) && ! empty( $args['end_date'] ) ) {
+            $where[] = $wpdb->prepare(
+                'create_time BETWEEN FROM_UNIXTIME(%d) AND FROM_UNIXTIME(%d)',
+                $args['start_date'],
+                $args['end_date']
+            );
+        }
+
+        $where_sql = ! empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
+
+        if ( ! empty( $args['count'] ) ) {
+            $query = "SELECT COUNT(*) FROM {$table} {$where_sql}";
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            return (int) $wpdb->get_var( $query );
+        }
+
+        $limit_clause = isset( $args['limit'], $args['offset'] )
+            ? $wpdb->prepare( 'LIMIT %d OFFSET %d', $args['limit'], $args['offset'] )
+            : '';
+
+        $query = "SELECT * FROM {$table} {$where_sql} {$limit_clause}";
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_results( $query );

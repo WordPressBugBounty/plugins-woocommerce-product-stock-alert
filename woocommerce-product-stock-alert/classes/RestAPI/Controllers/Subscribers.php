@@ -66,29 +66,75 @@ class Subscribers extends \WP_REST_Controller {
      * @param \WP_REST_Request The REST request object.
      */
     public function get_items_permissions_check( $request ) {
-        return current_user_can( 'manage_options' ) || current_user_can( 'edit_stores' );// phpcs:ignore WordPress.WP.Capabilities.Unknown
+        return Utill::current_user_has_capability( array( 'manage_options' ), 'get_subscribers' );
     }
 
     /**
      * Check if a given request has access to update items.
      *
-     * @param \WP_REST_Request The REST request object.
+     * @param \WP_REST_Request $request The REST request object.
+     * @return bool|\WP_Error
      */
     public function update_item_permissions_check( $request ) {
-        $user_id = Notifima()->current_user_id;
-        // For non-logged in user.
-        if ( 0 === $user_id && 'everyone' === Notifima()->setting->get_setting( 'is_guest_subscriptions_enable', '' ) ) {
+        // Site admins/store managers can always manage any subscriber record.
+        if ( true === Utill::current_user_has_capability( 'manage_options' ) ) {
             return true;
         }
 
-        // Check if user is admin or customer.
-        return current_user_can( 'read' ) || current_user_can( 'manage_options' );
+        $user_id = Notifima()->current_user_id;
+
+        // Logged-out visitor: only allowed when the store opts in to guest subscriptions.
+        if ( 0 === $user_id ) {
+            if ( 'everyone' === Notifima()->setting->get_setting( 'is_guest_subscriptions_enable', '' ) ) {
+                return true;
+            }
+
+            return new \WP_Error(
+                'notifima_forbidden_subscriber_action',
+                __( 'You must be logged in to manage stock alert subscriptions.', 'notifima' ),
+                array( 'status' => 401 )
+            );
+        }
+
+        // Any logged-in user needs at least the base `read` capability.
+        $has_read_capability = Utill::current_user_has_capability( 'read' );
+
+        if ( is_wp_error( $has_read_capability ) ) {
+            return $has_read_capability;
+        }
+
+        // `subscribe` opts an email into alerts - same trust level as the
+        // guest flow above, not a mutation of someone else's existing data.
+        if ( 'unsubscribe' !== $request->get_param( 'action' ) ) {
+            return true;
+        }
+
+        // `unsubscribe` mutates an existing record - require the requester to
+        // own the target email address.
+        $customer_email = sanitize_email( (string) $request->get_param( 'customer_email' ) );
+
+        // No email supplied - the handler falls back to the requester's own email.
+        if ( empty( $customer_email ) ) {
+            return true;
+        }
+
+        $current_user = Notifima()->current_user;
+
+        if ( ! empty( $current_user->user_email ) && 0 === strcasecmp( $current_user->user_email, $customer_email ) ) {
+            return true;
+        }
+
+        return new \WP_Error(
+            'notifima_forbidden_subscriber_action',
+            __( 'You are not allowed to modify this subscription.', 'notifima' ),
+            array( 'status' => 403 )
+        );
     }
 
     /**
      * Retrieve subscribers.
      *
-     * @param \WP_REST_Request The request object.
+     * @param \WP_REST_Request $request The request object.
      */
     public function get_items( $request ) {
         $nonce_check = Utill::validate_nonce( $request );
@@ -98,23 +144,35 @@ class Subscribers extends \WP_REST_Controller {
         }
 
         try {
-            $export = rest_sanitize_boolean( $request->get_param( 'export' ) );
-
-            if ( ! $export ) {
-                $response = rest_ensure_response( array() );
-                return apply_filters( 'notifima_pro_subscribers_list', $response, $request );
-            }
-
-            $query_args = array(
-                'post_type'      => array( 'product', 'product_variation' ),
-                'post_status'    => 'publish',
-                'posts_per_page' => -1,
-                'fields'         => 'ids',
+            $args = array(
+                'query' => array(
+                    'post_type'      => array( 'product', 'product_variation' ),
+                    'post_status'    => 'publish',
+                    'posts_per_page' => -1,
+                    'fields'         => 'ids',
+                ),
+                'subscribers' => array(),
             );
 
-            $product_ids = get_posts( $query_args );
+            /**
+             * Allow Pro to modify product and subscriber arguments.
+             */
+            $args = apply_filters(
+                'notifima_subscribers_args',
+                $args,
+                $request
+            );
 
-            $subscriber_records = Utill::get_subscribers( $product_ids );
+            $product_ids = get_posts( $args['query'] );
+
+            $subscriber_args = array_merge(
+                array(
+                    'product_ids' => $product_ids,
+                ),
+                $args['subscribers']
+            );
+
+            $subscriber_records = Utill::get_subscribers( $subscriber_args );
 
             $subscriber_items = array();
 
@@ -122,7 +180,10 @@ class Subscribers extends \WP_REST_Controller {
                 $product = wc_get_product( $subscriber->product_id );
                 $image   = get_the_post_thumbnail_url( $subscriber->product_id, 'full' );
                 $user    = get_user_by( 'email', $subscriber->email );
-                $date    = wp_date( get_option( 'date_format' ), strtotime( $subscriber->create_time ) );
+                $date    = wp_date(
+                    get_option( 'date_format' ),
+                    strtotime( $subscriber->create_time )
+                );
 
                 $statuses = array(
                     'mailsent'     => __( 'Mail Sent', 'notifima' ),
@@ -151,12 +212,32 @@ class Subscribers extends \WP_REST_Controller {
                 );
             }
 
-            return rest_ensure_response( $subscriber_items );
+            $response = rest_ensure_response( $subscriber_items );
+
+            $total_subscribers = 0;
+
+            foreach ( array( 'subscribed', 'unsubscribed', 'mailsent' ) as $status ) {
+                $count = Utill::get_subscribers(
+                    array(
+                        'count'       => true,
+                        'product_ids' => $product_ids,
+                        'status'      => $status,
+                    )
+                );
+
+                $total_subscribers += $count;
+                $response->header( 'X-' . ucfirst( $status ), $count );
+            }
+
+            $response->header( 'X-Total', $total_subscribers );
+
+            return $response;
+
         } catch ( \Exception $e ) {
             return new \WP_Error(
                 'server_error',
                 __( 'Unexpected server error', 'notifima' ),
-                array( 'status' => 500 )
+                array( 'status' => 500 ),
             );
         }
     }
