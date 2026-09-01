@@ -1,21 +1,21 @@
 # Copyright (c) 2026 Notifima Inc. All Rights Reserved.
 msgid ""
 msgstr ""
-"Project-Id-Version: Notifima 3.1.4\n"
+"Project-Id-Version: Notifima 3.1.5\n"
 "Report-Msgid-Bugs-To: https://notifima.com/contact/?utm_source=wpadmin&utm_medium=pluginsettings&utm_campaign=notifima\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-21T09:03:41+00:00\n"
+"POT-Creation-Date: 2026-09-01T01:52:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: notifima\n"
 
 #. Plugin Name of the plugin
 #: product_stock_alert.php
-#: classes/FrontendScripts.php:269
+#: classes/FrontendScripts.php:277
 msgid "Notifima"
 msgstr ""
 
@@ -147,7 +147,7 @@ msgstr ""
 msgid "You have subscribed to a product on {site_title} "
 msgstr ""
 
-#: classes/Install.php:631
+#: classes/Install.php:635
 msgid "Every 10 Minutes"
 msgstr ""
 
@@ -232,8 +232,8 @@ msgid "Settings Saved"
 msgstr ""
 
 #: classes/RestAPI/Controllers/Settings.php:85
-#: classes/RestAPI/Controllers/Subscribers.php:239
-#: classes/RestAPI/Controllers/Subscribers.php:270
+#: classes/RestAPI/Controllers/Subscribers.php:238
+#: classes/RestAPI/Controllers/Subscribers.php:269
 #: classes/RestAPI/Rest.php:103
 msgid "Unexpected server error"
 msgstr ""
@@ -269,16 +269,16 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: classes/RestAPI/Controllers/Subscribers.php:305
-#: classes/RestAPI/Controllers/Subscribers.php:400
+#: classes/RestAPI/Controllers/Subscribers.php:304
+#: classes/RestAPI/Controllers/Subscribers.php:399
 msgid "Invalid product."
 msgstr ""
 
-#: classes/RestAPI/Controllers/Subscribers.php:391
+#: classes/RestAPI/Controllers/Subscribers.php:390
 msgid "Customer email is required."
 msgstr ""
 
-#: classes/RestAPI/Controllers/Subscribers.php:417
+#: classes/RestAPI/Controllers/Subscribers.php:416
 #: assets/js/block/subscribe-form/index.js:1
 msgid "Something went wrong. Please try again."
 msgstr ""
@@ -322,11 +322,11 @@ msgid_plural "Unsubscribed <span class=\"count\">( %s )</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/Utill.php:156
+#: classes/Utill.php:157
 msgid "You are not allowed to perform this action."
 msgstr ""
 
-#: classes/Utill.php:173
+#: classes/Utill.php:174
 msgid "Invalid nonce."
 msgstr ""
 

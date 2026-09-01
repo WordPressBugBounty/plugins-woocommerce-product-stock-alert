@@ -63,7 +63,7 @@ class Subscribers extends \WP_REST_Controller {
     /**
      * Check if a given request has access to get items.
      *
-     * @param \WP_REST_Request The REST request object.
+     * @param \WP_REST_Request $request The REST request object.
      */
     public function get_items_permissions_check( $request ) {
         return Utill::current_user_has_capability( array( 'manage_options' ), 'get_subscribers' );
@@ -145,7 +145,7 @@ class Subscribers extends \WP_REST_Controller {
 
         try {
             $args = array(
-                'query' => array(
+                'query'       => array(
                     'post_type'      => array( 'product', 'product_variation' ),
                     'post_status'    => 'publish',
                     'posts_per_page' => -1,
@@ -232,7 +232,6 @@ class Subscribers extends \WP_REST_Controller {
             $response->header( 'X-Total', $total_subscribers );
 
             return $response;
-
         } catch ( \Exception $e ) {
             return new \WP_Error(
                 'server_error',
@@ -245,7 +244,7 @@ class Subscribers extends \WP_REST_Controller {
     /**
      * Update a subscriber.
      *
-     * @param \WP_REST_Request The request object.
+     * @param \WP_REST_Request $request The request object.
      */
     public function update_item( $request ) {
         $nonce_check = Utill::validate_nonce( $request );

@@ -19,10 +19,10 @@ defined( 'ABSPATH' ) || exit;
 class Utill {
 
     public const NOTIFIMA_SETTINGS = array(
-        'automation'                    => 'notifima_automation_settings',
-        'subscription-form-designer'    => 'notifima_subscription_form_designer_settings',
-        'customer-messages'             => 'notifima_customer_messages_settings',
-        'notifications'                 => 'notifima_notifications_settings',
+        'automation'                 => 'notifima_automation_settings',
+        'subscription-form-designer' => 'notifima_subscription_form_designer_settings',
+        'customer-messages'          => 'notifima_customer_messages_settings',
+        'notifications'              => 'notifima_notifications_settings',
     );
 
     public const NOTIFIMA_PRODUCT_META = array(
@@ -141,6 +141,7 @@ class Utill {
      * (not logged in) or 403 (logged in, but lacking the capability) status.
      *
      * @param string|array $capabilities One capability, or an array of capabilities - access is granted if the current user has any one of them.
+     * @param string       $context      Optional context passed through the `notifima_permissions_check` filter.
      * @return true|\WP_Error
      */
     public static function current_user_has_capability( $capabilities, $context = '' ) {
@@ -222,7 +223,7 @@ class Utill {
         if ( ! empty( $args['count'] ) ) {
             $query = "SELECT COUNT(*) FROM {$table} {$where_sql}";
 
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
             return (int) $wpdb->get_var( $query );
         }
 

@@ -45,6 +45,11 @@ class Install {
         add_action( 'init', array( $this, 'run_migration' ) );
     }
 
+    /**
+     * Run first-time install or version-gated migration on plugin init.
+     *
+     * @return void
+     */
     public function run_migration() {
         $previous_version = get_option( 'notifima_version', false );
         if ( ! $previous_version ) {
@@ -91,12 +96,13 @@ class Install {
 
     /**
      * Runs the database migration process.
+     *
+     * @param string $previous_version The previously installed plugin version.
      */
     public static function do_migration( $previous_version ) {
 
         // write migration code from 3.0.1.
         if ( version_compare( $previous_version, '3.1.0', '<' ) ) {
-
             $appearance_settings = get_option( 'notifima_appearance_settings', array() );
 
             $appearance_settings['is_double_optin']               = ! empty( $appearance_settings['is_double_optin'] ) ? 'confirm_via_email' : 'subscribe_immediately';
@@ -125,14 +131,13 @@ class Install {
 
             delete_option( 'notifima_mailchimp_settings' );
 
-
-            $email_settings     = get_option('notifima_email_settings', array() );
+            $email_settings = get_option( 'notifima_email_settings', array() );
 
             $email_settings['additional_alert_email'] = ! empty( $appearance_settings['additional_alert_email'] ) ? $appearance_settings['additional_alert_email'] : '';
 
             update_option( Utill::NOTIFIMA_SETTINGS['notifications'], $email_settings );
 
-            $customer_messages_settings     = get_option('notifima_form_submission_settings', array() );
+            $customer_messages_settings = get_option( 'notifima_form_submission_settings', array() );
 
             update_option( Utill::NOTIFIMA_SETTINGS['customer-messages'], $customer_messages_settings );
 
@@ -556,7 +561,7 @@ class Install {
         $previous_email_settings      = get_option( 'woo_stock_manager_email_tab_settings', $previous_email_settings );
 
         if ( version_compare( $previous_version, '3.0.0', '<=' ) ) {
-            $previous_mailchimp_settings = get_option( 'woo_stock_manager_mailchimp_tab_settings', array() );
+            $previous_mailchimp_settings                = get_option( 'woo_stock_manager_mailchimp_tab_settings', array() );
             $appearance_settings['is_mailchimp_enable'] = ! empty( $previous_mailchimp_settings ['is_mailchimp_enable'] ) ? 'mailchimp' : 'store_only';
 
             $appearance_settings['mailchimp'] = array(
@@ -616,7 +621,6 @@ class Install {
 
         $email_settings['additional_alert_email'] = ! empty( $previous_appearance_settings['additional_alert_email'] ) ? $previous_appearance_settings['additional_alert_email'] : '';
         update_option( Utill::NOTIFIMA_SETTINGS['notifications'], array_merge( $previous_email_settings, $email_settings ) );
-
     }
 
     /**
